@@ -1,4 +1,4 @@
-# NYU HPC
+# Using PyTorch in NYU HPC
 
 A quick reference to access NYU's High Performance Computing Prince Cluster.
 
