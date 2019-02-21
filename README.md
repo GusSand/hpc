@@ -235,3 +235,43 @@ More info [here](https://wikis.nyu.edu/display/NYUHPC/Submitting+jobs+with+sbatc
 ## Transfer Files
 
 I transfer files using MobaXTerm. If you need to setup a tunnel look [here](cvalenzuela/hpc) 
+
+
+## PyTorch
+
+Once you are all setup with the above, to get pytorch you need to do a couple of things:
+1. Create a virtual Environment
+2. Load the appropiate modules in the environment
+
+
+### Creating a Virtual Environment
+
+```
+pytorch-gpu
+cd pytorch-gpu/
+module load  python3/intel/3.6.3
+virtualenv --system-site-packages py3.6.3
+source py3.6.3/bin/activate
+```
+
+After the above you have your virtual environment setup. Now you need to get pytorch
+
+### Installing pytorch
+
+```
+pip3 install torch torchvision
+```
+
+### running pytorch short scripts
+
+Now everytime you want to use your pytorch environment all you need to do is:
+
+```
+[NYUNetID@log-0 ~]$source py3.6.3/bin/activate - activate python environment
+[NYUNetID@log-0 ~]$ srun --gres=gpu:1 --pty /bin/bash - interactive gpu environment on HPC
+
+[NYUNetID@gpu-25 ~]$cd /scratch/NYUNetID/trainSomething
+[NYUNetID@gpu-25 ~]$python train.py
+```
+
+
