@@ -2,7 +2,7 @@
 
 A quick reference to access NYU's High Performance Computing Prince Cluster.
 
-The official wiki is [here](https://wikis.nyu.edu/display/NYUHPC/Clusters+-+Prince), this is an unofficial document created as a quick-start guide for first-time users with a focus in Python.
+The official wiki is [here](https://wikis.nyu.edu/display/NYUHPC/Clusters+-+Prince), this is an unofficial document created as a quick-start guide for first-time users with a focus in Python and PyTorch.
 
 ## Get an account
 
@@ -14,11 +14,13 @@ To get an account approved, follow [this steps.](https://wikis.nyu.edu/display/N
 
 Once you have been approved, you can access HPC from:
 
- 1. Within the NYU network:
+ 1. Within the NYU network (in campus):
 
 ```bash
 ssh NYUNetID@prince.hpc.nyu.edu
 ```
+
+Remember to replace NYUNetID for your own NetID.  
 
 Once logged in, the root should be:
 `/home/NYUNetID`, so running `pwd` should print:
@@ -30,7 +32,7 @@ Once logged in, the root should be:
 
 2. From an off-campus location:
 
-First, login to the bastion host:
+First, Login to your VPN and then login to the bastion host, :
 
 ```bash
 ssh NYUNetID@gw.hpc.nyu.edu
@@ -41,12 +43,22 @@ Then login to the cluster:
 ```bash
 ssh prince.hpc.nyu.edu
 ```
+## Using Windows.  
+
+I use the [MobaXterm](https://mobaxterm.mobatek.net/) ssh client with the following settings for the Prince Cluster:
+
+```
+Remote host: prince.hpc.nyu.edu
+Username: NYUNetID
+Port: 22
+```
+This makes it one click to open a terminal to Prince. 
 
 ## File Systems
 
 You can get acces to three filesystems: `/home`, `/scratch`, and `/archive`.
 
-Scratch is a file system mounted on Prince that is connected to the compute nodes where we can upload files faster. Notice that the content gets periodically flushed.
+Scratch is a file system mounted on Prince that is connected to the compute nodes where we can upload files faster. Notice that the content gets flushed every 60 days with no backup!
 
 ```bash
 [NYUNetID@log-0 ~]$ cd /scratch/NYUNetID
@@ -54,7 +66,8 @@ Scratch is a file system mounted on Prince that is connected to the compute node
 /scratch/NYUNetID
 ```
 
-`/home` and `/scratch` are separate filesystems in separate places, but you should use `/scratch` to store your files.
+`/home` and `/scratch` are separate filesystems in separate places. 
+Depending on how often you use your files you might want to choose the appropiate file system. I use /home for the files I won't touch often. 
 
 ## Loading Modules
 
@@ -218,101 +231,7 @@ squeue -u $USER
 
 More info [here](https://wikis.nyu.edu/display/NYUHPC/Submitting+jobs+with+sbatch)
 
-## Setting up a tunnel
-
-To copy data between your workstation and the NYU HPC clusters, you must set up and start an SSH tunnel.
-
-What is a tunnel?
-
-> "A tunnel is a mechanism used to ship a foreign protocol across a network that normally wouldn't support it."<sup>[1](http://www.enterprisenetworkingplanet.com/netsp/article.php/3624566/Networking-101-Understanding-Tunneling.htm)</sup>
-
-1. In your local computer root directory, and if you don't have it already, create a folder called `/.shh`:
-```bash
-mkdir ~/.ssh
-```
-
-2. Set the permission to that folder:
-```bash
-chmod 700 ~/.ssh
-```
-
-3. Inside that folder create a new file called `config`:
-```bash
-touch config
-```
-
-4. Open that file in any text editor and add this: 
-```bash
-# first we create the tunnel, with instructions to pass incoming
-# packets on ports 8024, 8025 and 8026 through it and to specific
-# locations
-Host hpcgwtunnel
-   HostName gw.hpc.nyu.edu
-   ForwardX11 no
-   LocalForward 8025 dumbo.hpc.nyu.edu:22
-   LocalForward 8026 prince.hpc.nyu.edu:22
-   User NetID 
-# next we create an alias for incoming packets on the port. The
-# alias corresponds to where the tunnel forwards these packets
-Host dumbo
-  HostName localhost
-  Port 8025
-  ForwardX11 yes
-  User NetID
-
-Host prince
-  HostName localhost
-  Port 8026
-  ForwardX11 yes
-  User NetID
-```
-
-Be sure to replace the `NetID` for your NYU NetId
 
 ## Transfer Files
 
-To copy data between your workstation and the NYU HPC clusters, you must set up and start an SSH tunnel. (See previous step)
-
-
-1. Create a tunnel
-```bash
-ssh hpcgwtunnel
-```
-Once executed you'll see something like this:
-
-```bash
-Last login: Wed Nov  8 12:15:48 2017 from 74.65.201.238
-cv965@hpc-bastion1~>$
-```
-
-This will use the settings in `/.ssh/config` to create a tunnel. **You need to leave this open when transfering files**. Leave this terminal tab open and open a new tab to continue the process.
-
-2. Transfer files
-
-### Between your computer and the HPC
-
-- A File:
-```bash
-scp /Users/local/data.txt NYUNetID@prince:/scratch/NYUNetID/path/
-```
-
-- A Folder:
-```bash
-scp -r /Users/local/path NYUNetID@prince:/scratch/NYUNetID/path/
-```
-
-### Between the HPC and your computer
-
-- A File:
-```bash
-scp NYUNetID@prince:/scratch/NYUNetID/path/data.txt /Users/local/path/
-```
-
-- A Folder:
-```bash
-scp -r NYUNetID@prince:/scratch/NYUNetID/path/data.txt /Users/local/path/ 
-```
-
-## Screen
-
-Create a `./.screenrc` file and append this [gist](https://gist.github.com/joaopizani/2718397)
+I transfer files using MobaXTerm. If you need to setup a tunnel look [here](cvalenzuela/hpc) 
