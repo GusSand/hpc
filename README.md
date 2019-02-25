@@ -275,3 +275,11 @@ Now everytime you want to use your pytorch environment all you need to do is:
 ```
 
 
+### running jupyter notebook
+
+Instructions are [here](https://wikis.nyu.edu/display/NYUHPC/Running+Jupyter+on+Prince)
+
+- Once you copied and have your run-jupyter.sbatch
+- Just run it!! 
+
+
