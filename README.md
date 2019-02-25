@@ -267,11 +267,11 @@ pip3 install torch torchvision
 Now everytime you want to use your pytorch environment all you need to do is:
 
 ```
-[NYUNetID@log-0 ~]$source py3.6.3/bin/activate - activate python environment
+[NYUNetID@log-0 ~]$ source py3.6.3/bin/activate - activate python environment
 [NYUNetID@log-0 ~]$ srun --gres=gpu:1 --pty /bin/bash - interactive gpu environment on HPC
 
-[NYUNetID@gpu-25 ~]$cd /scratch/NYUNetID/trainSomething
-[NYUNetID@gpu-25 ~]$python train.py
+[NYUNetID@gpu-25 ~]$ cd /scratch/NYUNetID/trainSomething
+[NYUNetID@gpu-25 ~]$ python train.py
 ```
 
 
@@ -280,6 +280,23 @@ Now everytime you want to use your pytorch environment all you need to do is:
 Instructions are [here](https://wikis.nyu.edu/display/NYUHPC/Running+Jupyter+on+Prince)
 
 - Once you copied and have your run-jupyter.sbatch
-- Just run it!! 
+```
+[NYUNetID@log-0 ~]$ source py3.6.3/bin/activate - activate python environment
+[NYUNetID@log-0 ~]$ sbatch run-jupyter-gpu.sbatch
+[NYUNetID@log-0 ~]$ cat slurm-xxxx.out
 
+```
 
+in a separate window (ubuntu shell) type:
+
+```
+
+ssh -L NNNN:localhost:NNN netID@prince
+
+```
+
+Open a browser at localhost NNNN:
+
+```
+http://localhost:8925/?token=76f100825af441457502d5d080c1776b987a2f76101460f4
+```
