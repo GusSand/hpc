@@ -246,8 +246,9 @@ Once you are all setup with the above, to get pytorch you need to do a couple of
 
 ### Creating a Virtual Environment
 
+
 ```
-pytorch-gpu
+mkdir /scratch/gs157/tmp/pytorch-gpu
 cd pytorch-gpu/
 module load  python3/intel/3.6.3
 virtualenv --system-site-packages py3.6.3
@@ -258,8 +259,12 @@ After the above you have your virtual environment setup. Now you need to get pyt
 
 ### Installing pytorch
 
+Note on 5/12/20:
+On Prince, GPU driver does not support CUDA 10.2, if you are running PyTorch, please try to use PyTorch built with CUDA 10.1.
+
 ```
 pip3 install torch torchvision
+pip install torch==1.5.0+cu101 torchvision==0.6.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
 ### running pytorch short scripts
