@@ -2,7 +2,7 @@
 
 A quick reference to access NYU's High Performance Computing Prince Cluster.
 
-The official wiki is [here](https://wikis.nyu.edu/display/NYUHPC/Clusters+-+Prince), this is an unofficial document created as a quick-start guide for first-time users with a focus in Python and PyTorch.
+The official wiki is [here](https://sites.google.com/a/nyu.edu/nyu-hpc/), this is an unofficial document created as a quick-start guide for first-time users with a focus in Python and PyTorch.
 
 ## Get an account
 
